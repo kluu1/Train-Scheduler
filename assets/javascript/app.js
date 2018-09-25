@@ -3,7 +3,7 @@ $(document).ready(function() {
     // Get DOM elements
     $trainName = $('#trainNameInput');
     $destinationInput = $('#destinationInput');
-    $trainTimeInput = $('#trainTimeInput');
+    $firstTrainInput = $('#first-train-input');
     $frequencyInput = $('#frequencyInput');
     $addTrainBtn = $('#addTrainBtn');
     $trainTable = $('#train-table');
@@ -32,15 +32,16 @@ $(document).ready(function() {
         // Create scope variables and store user inputs
         var trainName = $trainName.val().trim();
         var destination = $destinationInput.val().trim();
-        var trainTimeInput = moment($trainTimeInput.val().trim(), "HH:mm").subtract(10, "years").format("X");
+        var firstTrainInput = moment($firstTrainInput.val().trim(), "HH:mm").subtract(1, "years").format("X");
         var frequencyInput = $frequencyInput.val().trim();
 
         // Create a new object to store new train data
         var newTrain = {
             name: trainName,
             destination: destination,
-            trainTime: trainTimeInput,
-            frequency: frequencyInput
+            firstTrain: firstTrainInput,
+            frequency: frequencyInput,
+            dateAdded: firebase.database.ServerValue.TIMESTAMP
         }
 
         // Insert new train data into the database
@@ -49,7 +50,7 @@ $(document).ready(function() {
         // Clears users input
         $trainName.val('');
         $destinationInput.val('');
-        $trainTimeInput.val('');
+        $firstTrainInput.val('');
         $frequencyInput.val('');
     });
 
@@ -61,8 +62,11 @@ $(document).ready(function() {
         // Store train data in scope variables
         var name = data.name;
         var destination = data.destination;
-        var firstTrain = data.trainTime;
+        var firstTrain = data.firstTrain;
         var frequency = data.frequency;
+        var trainDiff = 0;
+        var trainRemainder = 0;
+        var arrivalTime = '';
 
         console.log(name);
         console.log(destination);
@@ -72,25 +76,25 @@ $(document).ready(function() {
         // Compute the difference from now and first train,
         // Convert the difference into minutes,
         // Get the remainder of time and store in variable
-        var trainRemainder = moment().diff(moment.unix(firstTrain), "minutes") //% frequency;
+        trainDiff = moment().diff(moment.unix(firstTrain), "minutes"); 
+        console.log(trainDiff);
+        trainRemainder = trainDiff % frequency;
         console.log(trainRemainder);
 
         // Calculate minutes till arrival
         var mintuesTillArrival = frequency - trainRemainder;
 
         // Calculate the arrival time by adding mintues till arrival to the currrent time
-        var arrivalTime = moment().add(mintuesTillArrival, "m").format("hh:mm A");
+        arrivalTime = moment().add(mintuesTillArrival, "m").format("hh:mm A");
 
         // Add each train's data into the table 
         $trainTable.append(
             "<tr><td>" + name + 
             "</td><td>" + destination + 
-            "</td><td class='min'>" + frequency + 
-            "</td><td class='min'>" + arrivalTime + 
-            "</td><td class='min'>" + mintuesTillArrival + 
+            "</td><td>" + frequency + 
+            "</td><td>" + arrivalTime + 
+            "</td><td>" + mintuesTillArrival + 
             "</td></tr>");
     });
-
-
-    
+   
 });
