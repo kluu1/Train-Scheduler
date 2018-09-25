@@ -11,15 +11,18 @@
         <nav class="navbar navbar-dark bg-primary navbar-fixed-top" id="nav-header">
             <div class="navbar-header">
                 <button type="button" class="btn btn-default btn-md">
-                    <span class="glyphicon glyphicon-console" aria-hidden="true"></span>TS
+                    <span class="glyphicon glyphicon-console" aria-hidden="true"></span>ATS
                 </button>
             </div>
         </nav> <!-- /nav-bar -->
         <div class="container">
             <div class="jumbotron">
                 <div class="jumbotron-header">
-                    <h1>Train Scheduler</h1>
-                    <h3>The #1 Train Schedule App! Find your train below.</h3>
+                    <h1>Atlanta Transit System</h1>
+                    <h3>
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        Current Time: <span id="clock"></span>
+                    </h3>
                 </div>
             </div> <!-- /jumbotron -->
         <div class="panel panel-primary">
@@ -61,8 +64,8 @@
                         <label for="frequency">Frequency (min)</label>
                         <input type="text" class="form-control" id="frequencyInput">
                     </div>
-                    
                     <button type="submit" class="btn btn-primary" id="addTrainBtn">Submit</button>
+                    <span id="required-fields">*ALL fields are required to add a train to the schedule.</span>
                 </form>
             </div>
         </div>
