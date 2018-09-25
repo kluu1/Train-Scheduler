@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <title>Train Scheduler</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-primary navbar-fixed-top" id="nav-header">
+            <div class="navbar-header">
+                <button type="button" class="btn btn-default btn-md">
+                    <span class="glyphicon glyphicon-console" aria-hidden="true"></span>TS
+                </button>
+            </div>
+        </nav> <!-- /nav-bar -->
+        <div class="container">
+            <div class="jumbotron">
+                <div class="jumbotron-header">
+                    <h1>Train Scheduler</h1>
+                    <h3>The #1 Train Schedule App! Find your train below.</h3>
+                </div>
+            </div> <!-- /jumbotron -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Current Train</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Train Name</th>
+                        <th>Destination</th>
+                        <th>Frequency (min)</th>
+                        <th>Next Arrival</th>
+                        <th>Minutes Away</th>
+                    </tr>
+                    <tbody id="train-table"></tbody>
+                </table>
+            </div>
+        </div> <!-- /panel-->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add Train</h3>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="trainName">Train Name</label>
+                        <input type="text" class="form-control" id="trainNameInput">
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Destination</label>
+                        <input type="text" class="form-control" id="destinationInput">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstTrain">First Train Time (HH:mm - military time)</label>
+                        <input type="text" class="form-control" id="trainTimeInput">
+                    </div>
+                    <div class="form-group">
+                        <label for="frequency">Frequency (min)</label>
+                        <input type="text" class="form-control" id="frequencyInput">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="addTrainBtn">Submit</button>
+                </form>
+            </div>
+        </div>
+        </div> <!-- /container -->
+        <footer>
+            <div>Copyright &copy; 2018 Kevin Luu </div> 
+        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+        <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+        <script src="assets/javascript/app.js"></script>
+    </body>
+</html>
