@@ -1,5 +1,5 @@
 # Train Scheduler
-Live Demo: 
+Live Demo: https://kluu1.github.io/Train-Scheduler/
 - This is a simple and clean Train Schedule App.
 - When the page loads, a list of trains will display with destination, frequency, next arrival and minutes away
 - Users will be able to add new train if desired
