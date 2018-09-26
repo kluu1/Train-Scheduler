@@ -41,6 +41,7 @@ $(document).ready(function() {
     // Create event listener to add new train on click
     $addTrainBtn.on('click', function(event) {
 
+        // Prevents the page from reloading
         event.preventDefault();
 
         $reqFields.hide();
@@ -56,14 +57,17 @@ $(document).ready(function() {
         // Check that all fields are filled out
         if (trainName === "" || destination === "" || firstTrainTime === "" || trainFrequency === "") {
             $reqFields.show();
+            $reqFields.text('*ALL fields are required to add a train to the schedule.');
             return false;		
         // Check if First Train Time is in military time
         } else if (firstTrainTime.length !== 5 || firstTrainTime.substring(2,3) !== ':') {
             $militaryT.show();
+            $militaryT.text('*First train time must be in military time.');
             return false;
         // Check if frequency is a number
         } else if (isNaN(trainFrequency)) {
             $nanFreq.show();
+            $nanFreq.text('*Frequency is not a number. Please enter a number in minutes.');
             $("#not-a-number").html("Not a number. Enter a number (in minutes).");
             return false;
         }
@@ -81,7 +85,7 @@ $(document).ready(function() {
             // Insert new train data into the database
             trainsRef.push(newTrain);
 
-            //Confirmation modal that appears when user submits form and train is added successfully to the schedule.
+            // Confirmation modal that appears when user submits form and train is added successfully
 		    $(".add-train-modal").html("<p>" + newTrain.trainName + " was successfully added to the current schedule.");
 		    $('#addTrain').modal();
 
