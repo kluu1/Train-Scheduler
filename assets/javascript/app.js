@@ -53,9 +53,6 @@ $(document).ready(function() {
 
     // Initialize authentication service
     var auth = firebase.auth();
-    
-    // Listens to authentication changes (user signs in or signs out)
-    // firebase.auth().onAuthStateChanged()
 
     // Create event listener to add new train on click
     $addTrainBtn.on('click', function(event) {
@@ -78,21 +75,24 @@ $(document).ready(function() {
             $reqFields.show();
             $reqFields.text('*ALL fields are required to add a train to the schedule.');
             return false;		
+
         // Check if First Train Time is in military time
         } else if (firstTrainTime.length !== 5 || firstTrainTime.substring(2,3) !== ':') {
             $militaryT.show();
             $militaryT.text('*First train time must be in military time.');
             return false;
+
         // Check if frequency is a number
         } else if (isNaN(trainFrequency)) {
             $nanFreq.show();
             $nanFreq.text('*Frequency is not a number. Please enter a number in minutes.');
             $("#not-a-number").html("Not a number. Enter a number (in minutes).");
             return false;
-        }
-        
-        {
-            // Create a new object to store new train data
+
+        // Create a new object to store new train data
+        } else {
+
+            // Create new train object to store into database
             var newTrain = {
                     name: trainName,
                     destination: destination,
@@ -114,10 +114,9 @@ $(document).ready(function() {
             $firstTrainTime.val('');
             $frequencyInput.val('');
         }
-
     });
     
-    // Reference Firebase when page loads and train added
+    // Reference Firebase when page loads and new train is added
     database.ref().child('/trains').on('value', getTrains);
 
     // Function to get train data and display
@@ -133,7 +132,6 @@ $(document).ready(function() {
             var tFrequency = train.frequency;
             var destination = train.destination;
             var newTime;
-
             var convertedFirstTrain = moment(firstTrain, "HH:mm").subtract(1, "years").format("X");
 
             // Compute the difference from now and first train,
@@ -208,6 +206,8 @@ $(document).ready(function() {
             $userEmail.show();
             $userPass.show();
             $currentUser.hide();
+            $userEmail.val('');
+            $userPass.val('');
         }
       });
 
