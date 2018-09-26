@@ -49,23 +49,24 @@
             <div class="panel-body">
                 <form>
                     <div class="form-group">
-                        <label for="trainName">Train Name</label>
-                        <input type="text" class="form-control" id="trainNameInput">
+                        <label for="train-name-input">Train Name</label>
+                        <input type="text" class="form-control" id="train-name-input">
                     </div>
                     <div class="form-group">
-                        <label for="destination">Destination</label>
-                        <input type="text" class="form-control" id="destinationInput">
+                        <label for="destination-input">Destination</label>
+                        <input type="text" class="form-control" id="destination-input">
                     </div>
                     <div class="form-group">
-                        <label for="firstTrain">First Train Time (HH:mm - military time)</label>
+                        <label for="first-train-input">First Train Time (HH:mm - military time)</label>
                         <input type="text" class="form-control" id="first-train-input">
                     </div>
                     <div class="form-group">
-                        <label for="frequency">Frequency (min)</label>
-                        <input type="text" class="form-control" id="frequencyInput">
+                        <label for="frequency-input">Frequency (min)</label>
+                        <input type="text" class="form-control" id="frequency-input">
                     </div>
-                    <button type="submit" class="btn btn-primary" id="addTrainBtn">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="add-train-btn">Submit</button>
                     <span id="required-fields">*ALL fields are required to add a train to the schedule.</span>
+                    <span id="not-military-time">*First train time must be in military time.</span>
                 </form>
             </div>
         </div>
