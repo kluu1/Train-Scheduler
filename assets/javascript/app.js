@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $('.delete').hide();
+
     // Get user DOM elements
     $userEmail = $('#user-email');
     $userPass = $('#password');
@@ -27,6 +29,7 @@ $(document).ready(function() {
     $nanFreq.hide();
     $addTrainCard.hide();
     $currentUser.hide();
+    
 
     // Setup clock to display current time
     setInterval(function(){
@@ -36,6 +39,10 @@ $(document).ready(function() {
     // Initialize all tooltips on a page
     $('[data-toggle="tooltip"]').tooltip()
 
+    /*******************************
+    *  Firebase Database
+    ********************************/
+    
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyB94hM745QQLwmBtzMonrXZeQVTC754aMI",
@@ -51,15 +58,13 @@ $(document).ready(function() {
     var database = firebase.database();
     var trainsRef = database.ref('/trains');
 
-    // Initialize authentication service
-    var auth = firebase.auth();
-
     // Create event listener to add new train on click
     $addTrainBtn.on('click', function(event) {
 
         // Prevents the page from reloading
         event.preventDefault();
 
+        // Hide fields error messages if shown
         $reqFields.hide();
         $militaryT.hide();
         $nanFreq.hide();
@@ -88,8 +93,6 @@ $(document).ready(function() {
             $nanFreq.text('*Frequency is not a number. Please enter a number in minutes.');
             $("#not-a-number").html("Not a number. Enter a number (in minutes).");
             return false;
-
-        // Create a new object to store new train data
         } else {
 
             // Create new train object to store into database
@@ -122,11 +125,13 @@ $(document).ready(function() {
     // Function to get train data and display
     function getTrains(snapshot) {
 
+        // Clear train table
         $trainTable.empty()
 
+        // For each train, perform calulations and display to the page
         snapshot.forEach(function(childSnapshot) {
             var train = childSnapshot.val();
-            var trainKey = train.key;
+            var trainKey = childSnapshot.key;
             var name = train.name;
             var firstTrain = train.firstTrain;
             var tFrequency = train.frequency;
@@ -134,10 +139,10 @@ $(document).ready(function() {
             var newTime;
             var convertedFirstTrain = moment(firstTrain, "HH:mm").subtract(1, "years").format("X");
 
-            // Compute the difference from now and first train,
-            // Convert the difference into minutes,
-            // Get the remainder of time and store in variable
+            // Time difference from now & first train & convert into minutes
             var timeDiff = moment().diff(moment.unix(convertedFirstTrain), 'minutes'); 
+
+            // Get the remainder of time and store in variable
             var tRemainder = timeDiff % tFrequency;
 
             // Calculate minutes till arrival
@@ -155,16 +160,28 @@ $(document).ready(function() {
                 tMinutesTillTrain = Math.abs(timeDiff - 1);
             }
 
+            // Add train to the train table
             $trainTable.append(
-                "<tr><td>" + name + 
+                "<tr class=" + trainKey + "><td>" + name + 
                 "</td><td>" + destination + 
                 "</td><td>" + tFrequency + 
                 "</td><td>" + arrivalTime + 
                 "</td><td>" + tMinutesTillTrain + 
+                "</td><td>" + "<button class='delete btn btn-primary' data-train=" + trainKey + ">DELETE</button>" +
                 "</td></tr>");
-
         });
-    }
+    } // TODO: Handle ERROR?
+    
+    // Function to delete train
+    $(document).on('click','.delete', function() {
+        var trainKey = $(this).attr('data-train');
+        database.ref("trains/" + trainKey).remove();
+        $('.'+ trainKey).remove();
+    });
+
+    /*******************************
+    *  Firebase Authentication
+    ********************************/
 
     // Event listener for Sign Up
     $btnSignUp.on('click', function(event) {
@@ -184,8 +201,8 @@ $(document).ready(function() {
         var email = $userEmail.val();
         var pass = $userPass.val();
         var promise = firebase.auth().signInWithEmailAndPassword(email, pass);
-        promise.catch(function(e) { 
-            console.log(e.massage)
+        promise.catch(function(err) { 
+            console.log(err.massage)
         });
       });
 
@@ -200,6 +217,7 @@ $(document).ready(function() {
             $btnLogOut.show();
             $currentUser.show();
             $currentUser.text(user.email);
+            $('.delete').show();
         } else {
             $btnLogOut.hide();
             $btnLogin.show();
@@ -208,12 +226,13 @@ $(document).ready(function() {
             $currentUser.hide();
             $userEmail.val('');
             $userPass.val('');
+            $('.delete').hide();
         }
       });
 
     // User Log Out
     $btnLogOut.on('click', function(event) {
-        event.preventDefault();
+        // event.preventDefault();
         firebase.auth().signOut();
         console.log('logged out');
     });
