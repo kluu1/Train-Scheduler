@@ -3,15 +3,17 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
         <link rel="stylesheet" href="assets/css/style.css">
         <title>Train Scheduler</title>
     </head>
-    <body>
-        <nav class="navbar navbar-dark bg-primary navbar-fixed-top" id="nav-header">
+        <body>
+        <nav class="navbar navbar-dark bg-info" id="nav-header">
             <div class="navbar-header">
                 <button type="button" class="btn btn-default btn-md">
-                    <span class="glyphicon glyphicon-console" aria-hidden="true"></span>ATS
+                    ATS
                 </button>
             </div>
         </nav> <!-- /nav-bar -->
@@ -20,33 +22,33 @@
                 <div class="jumbotron-header">
                     <h1>Atlanta Transit System</h1>
                     <h3>
-                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                        Current Time: <span id="clock"></span>
+                        <img src="assets/images/clock.svg" alt="clock">
+                        Current Time: <span id="clock"></span> 
                     </h3>
                 </div>
             </div> <!-- /jumbotron -->
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Current Train</h3>
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">
+                <h3 class="card-title">Current Trains</h3>
             </div>
-            <div class="panel-body">
+            <div class="card-body text-dark bg-light">
                 <table class="table table-hover">
                     <tr>
-                        <th>Train Name</th>
-                        <th>Destination</th>
-                        <th>Frequency (min)</th>
-                        <th>Next Arrival</th>
-                        <th>Minutes Away</th>
+                        <th>Train Name <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Name of the train."></i></th></th>
+                        <th>Destination <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Location to where the train is traveling to."></i></th>
+                        <th>Frequency (min) <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="How often (in minutes) the train leaves."></i></th>
+                        <th>Next Arrival <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Arrival time of the next train."></i></th>
+                        <th>Minutes Away <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Number of minutes until next train arrives."></i></th>
                     </tr>
                     <tbody id="train-table"></tbody>
                 </table>
             </div>
-        </div> <!-- /panel-->
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Add Train</h3>
+        </div> <!-- /card-->
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">
+                <h3 class="card-title">Add Train</h3>
             </div>
-            <div class="panel-body">
+            <div class="card-body text-dark bg-light">
                 <form>
                     <div class="form-group">
                         <label for="train-name-input">Train Name</label>
@@ -64,9 +66,29 @@
                         <label for="frequency-input">Frequency (min)</label>
                         <input type="text" class="form-control" id="frequency-input">
                     </div>
-                    <button type="submit" class="btn btn-primary" id="add-train-btn">Submit</button>
+                    <button type="submit" class="btn btn-primary bg-info" id="add-train-btn" data-toggle="modal" data-target="#submit-modal">Submit</button>
                     <span id="required-fields">*ALL fields are required to add a train to the schedule.</span>
                     <span id="not-military-time">*First train time must be in military time.</span>
+                    <span id="nan-frequency">*Frequency is not a number. Please enter a number in minutes.</span>                
+                    <!-- Modal -->
+                    <div class="modal fade" id="submit-modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header text-white bg-info">
+                                    <h5 class="modal-title">Add New Train</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Train Added Successfully!
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- /modal -->
                 </form>
             </div>
         </div>
@@ -74,7 +96,9 @@
         <footer>
             <div>Copyright &copy; 2018 Kevin Luu </div> 
         </footer>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
         <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
         <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
         <script src="assets/javascript/app.js"></script>

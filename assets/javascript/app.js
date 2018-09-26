@@ -10,9 +10,13 @@ $(document).ready(function() {
     $clock = $('#clock');
     $reqFields = $('#required-fields');
     $militaryT = $('#not-military-time');
+    $nanFreq = $('#nan-frequency');
     $reqFields.hide();
     $militaryT.hide();
-    
+    $nanFreq.hide();
+
+    // Initialize all tooltips on a page
+    $('[data-toggle="tooltip"]').tooltip()
 
     // Initialize Firebase
     var config = {
@@ -41,33 +45,45 @@ $(document).ready(function() {
 
         $reqFields.hide();
         $militaryT.hide();
+        $nanFreq.hide();
 
         // Create scope variables and store user inputs
         var trainName = $trainName.val().trim();
         var destination = $destinationInput.val().trim();
         var firstTrainTime = $firstTrainTime.val().trim();
-        var frequencyInput = $frequencyInput.val().trim();
+        var trainFrequency = $frequencyInput.val().trim();
 
         // Check that all fields are filled out
-        if (trainName === "" || destination === "" || firstTrainTime === "" || frequencyInput === "") {
+        if (trainName === "" || destination === "" || firstTrainTime === "" || trainFrequency === "") {
             $reqFields.show();
             return false;		
         // Check if First Train Time is in military time
         } else if (firstTrainTime.length !== 5 || firstTrainTime.substring(2,3) !== ':') {
             $militaryT.show();
             return false;
-        } else {
+        // Check if frequency is a number
+        } else if (isNaN(trainFrequency)) {
+            $nanFreq.show();
+            $("#not-a-number").html("Not a number. Enter a number (in minutes).");
+            return false;
+        }
+        
+        {
             // Create a new object to store new train data
             var newTrain = {
                     name: trainName,
                     destination: destination,
                     firstTrain: firstTrainTime,
-                    frequency: frequencyInput,
+                    frequency: trainFrequency,
                     dateAdded: firebase.database.ServerValue.TIMESTAMP
                 }
 
             // Insert new train data into the database
             trainsRef.push(newTrain);
+
+            //Confirmation modal that appears when user submits form and train is added successfully to the schedule.
+		    $(".add-train-modal").html("<p>" + newTrain.trainName + " was successfully added to the current schedule.");
+		    $('#addTrain').modal();
 
             // Clears users input
             $trainName.val('');
