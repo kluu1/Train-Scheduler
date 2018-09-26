@@ -1,6 +1,14 @@
 $(document).ready(function() {
 
-    // Get DOM elements
+    // Get user DOM elements
+    $userEmail = $('#user-email');
+    $userPass = $('#password');
+    $btnLogin = $('#btn-login');
+    $btnSignUp = $('#btn-sign-up');
+    $btnLogOut = $('#btn-log-out');
+    $currentUser = $('#current-user');
+
+    // Get train DOM elements
     $trainName = $('#train-name-input');
     $destinationInput = $('#destination-input');
     $firstTrainTime = $('#first-train-input');
@@ -11,9 +19,19 @@ $(document).ready(function() {
     $reqFields = $('#required-fields');
     $militaryT = $('#not-military-time');
     $nanFreq = $('#nan-frequency');
+    $addTrainCard = $('#add-train-card');
+    
+    // Hide elements on start up
     $reqFields.hide();
     $militaryT.hide();
     $nanFreq.hide();
+    $addTrainCard.hide();
+    $currentUser.hide();
+
+    // Setup clock to display current time
+    setInterval(function(){
+        $clock.text(moment().format('hh:mm:ss A'))
+    }, 1000);
 
     // Initialize all tooltips on a page
     $('[data-toggle="tooltip"]').tooltip()
@@ -29,14 +47,15 @@ $(document).ready(function() {
     };
     firebase.initializeApp(config);
 
-    // Setup clock to display current time
-    setInterval(function(){
-        $clock.text(moment().format('hh:mm:ss A'))
-    }, 1000);
-
     // Create database references
     var database = firebase.database();
     var trainsRef = database.ref('/trains');
+
+    // Initialize authentication service
+    var auth = firebase.auth();
+    
+    // Listens to authentication changes (user signs in or signs out)
+    // firebase.auth().onAuthStateChanged()
 
     // Create event listener to add new train on click
     $addTrainBtn.on('click', function(event) {
@@ -148,6 +167,56 @@ $(document).ready(function() {
 
         });
     }
+
+    // Event listener for Sign Up
+    $btnSignUp.on('click', function(event) {
+        event.preventDefault();
+        var email = $userEmail.val();
+        var pass = $userPass.val();
+        console.log('email: ' + email);
+        console.log('pass: ' + pass);
+        firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error) {
+            console.log(error.message);
+        });
+    });
+
+    // Sign in with email and password
+    $btnLogin.on('click', function(event) {
+        event.preventDefault();
+        var email = $userEmail.val();
+        var pass = $userPass.val();
+        var promise = firebase.auth().signInWithEmailAndPassword(email, pass);
+        promise.catch(function(e) { 
+            console.log(e.massage)
+        });
+      });
+
+    // Acting upon user sign in and sign out
+    firebase.auth().onAuthStateChanged(function(user) { 
+        if (user) {
+            $btnLogin.hide();
+            $btnSignUp.hide();
+            $userEmail.hide();
+            $userPass.hide();
+            $addTrainCard.show();
+            $btnLogOut.show();
+            $currentUser.show();
+            $currentUser.text(user.email);
+        } else {
+            $btnLogOut.hide();
+            $btnLogin.show();
+            $userEmail.show();
+            $userPass.show();
+            $currentUser.hide();
+        }
+      });
+
+    // User Log Out
+    $btnLogOut.on('click', function(event) {
+        event.preventDefault();
+        firebase.auth().signOut();
+        console.log('logged out');
+    });
 
 });
 

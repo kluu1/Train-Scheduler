@@ -7,16 +7,25 @@
     margin-bottom: 30px;
 }
 
-.navbar-header .btn {
+#nav-header .btn:first-child {
     background-color: #17a2b8;
     border: 1px solid #fff;
     color: #fff;
     margin-left: 5px;
 }
 
+#nav-header .btn {
+    margin-left: 5px;
+}
+
 #brand-logo {
     font-size: 24px;
     color: #1d1d1d;
+}
+
+#current-user {
+    color: #fff;
+    margin-right: 5px;
 }
 
 #brand-logo:hover {

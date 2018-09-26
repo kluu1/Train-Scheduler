@@ -10,12 +10,16 @@
     </head>
         <body>
         <!-- Nav -->
-        <nav class="navbar navbar-dark bg-info" id="nav-header">
-            <div class="navbar-header">
-                <button type="button" class="btn btn-default btn-md">
-                    ATS
-                </button>
-            </div>
+        <nav class="navbar navbar-dark bg-info justify-content-between" id="nav-header">
+            <button type="button" class="btn btn-default btn-md">ATS</button>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="text" id="user-email" placeholder="User Email">
+                <input class="form-control mr-sm-2" type="password" id="password" placeholder="Password">
+                <button class="btn btn-primary my-2 my-sm-0" type="submit" id="btn-login">Login</button>
+                <button class="btn btn-primary my-2 my-sm-0" type="submit" id="btn-sign-up">Sign Up</button>
+                <span id="current-user"></span>
+                <button class="btn btn-primary my-2 my-sm-0" type="submit" id="btn-log-out">Log out</button>
+            </form> 
         </nav> <!-- /nav-bar -->
         <!-- Container -->
         <div class="container">
@@ -45,7 +49,7 @@
                 </table>
             </div>
         </div> <!-- /card-->
-        <div class="card text-white bg-info mb-3">
+        <div class="card text-white bg-info mb-3" id="add-train-card">
             <div class="card-header">
                 <h3 class="card-title">Add Train</h3>
             </div>
@@ -101,7 +105,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
         <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
         <script src="assets/javascript/app.js"></script>
     </body>
