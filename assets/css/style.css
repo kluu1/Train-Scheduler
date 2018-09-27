@@ -1,10 +1,15 @@
+/***********************
+* Index.html
+***********************/
+
 #nav-header {
     box-shadow: 0px 2px 6px 2px rgba(100,100,100,0.5);
     margin-bottom: 30px;
 }
 
-#nav-header .fa {
+#nav-header .fa-subway {
     margin-right: 7px;
+    margin-left: 0px;
     height: 19px;
 }
 
@@ -19,12 +24,35 @@
 }
 
 #current-user {
+    display: none;
     color: #fff;
     margin-right: 5px;
 }
 
+btn-log-out {
+    display: none;
+}
+
 .jumbotron-header {
     border-bottom: 1px solid lightgray;
+}
+
+.card-title {
+    margin-bottom: 0px;
+}
+
+#add-train-card {
+    display: none;
+}
+
+#current-user {
+    display: none;
+}
+
+#error-message {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
 }
 
 form span {
@@ -38,8 +66,24 @@ footer {
     margin: 0 auto;
     margin-top: 20px;
     padding: 20px;
-    /* border-top: 1px solid lightgray; */
-    /* position:absolute;
-    bottom:0;
-    width:100%; */
 }
+
+/****************************
+* Sign Up and Log In
+*****************************/
+
+button .fa {
+    margin-left: 7px;
+}
+
+#signup-card, #signin-card {
+    width: 42rem;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+
+
+
+
+
+

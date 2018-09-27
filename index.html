@@ -9,17 +9,15 @@
         <title>Atlanta Transit System</title>
     </head>
         <body>
-        <!-- Nav -->
         <nav class="navbar navbar-dark bg-info justify-content-between" id="nav-header">
-            <button type="button" class="btn btn-default btn-md"><i class='fa fa-subway' aria-hidden='true'></i>ATS</button>
+            <button type="button" class="btn btn-default btn-md"><i class='fa fa-subway'></i>ATS</button>
             <form class="form-inline">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit" id="btn-login">Login</button>
-                <button class="btn btn-primary my-2 my-sm-0" type="submit" id="btn-sign-up">Sign Up</button>
+                <button class="btn btn-primary" type="submit" id="btn-login">Login <i class="fa fa-sign-in-alt"></i></button>
+                <button class="btn btn-primary" type="submit" id="btn-sign-up">Sign Up <i class="fa fa-play-circle"></i></button>
                 <span id="current-user"></span>
-                <button class="btn btn-primary my-2 my-sm-0" type="submit" id="btn-log-out">Log out<i class="fa fa-sign-out-alt"></i></button></button>
+                <button class="btn btn-primary" type="submit" id="btn-log-out">Log out<i class="fa fa-sign-out-alt"></i></button></button>
             </form> 
-        </nav> <!-- /nav-bar -->
-        <!-- Container -->
+        </nav> 
         <div class="container">
             <div class="jumbotron">
                 <div class="jumbotron-header">
@@ -29,7 +27,7 @@
                         Current Time: <span id="clock"></span> 
                     </h3>
                 </div>
-            </div> <!-- /jumbotron -->
+            </div> 
         <div class="card text-white bg-info mb-3">
             <div class="card-header">
                 <h3 class="card-title">Current Trains</h3>
@@ -52,7 +50,6 @@
                 <h3 class="card-title">Add Train</h3>
             </div>
             <div class="card-body text-dark bg-light">
-                <!-- Form -->
                 <form>
                     <div class="form-group">
                         <label for="train-name-input">Train Name</label>
@@ -105,6 +102,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
         <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
         <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+        <script src="assets/javascript/config.js"></script>
         <script src="assets/javascript/app.js"></script>
     </body>
 </html>

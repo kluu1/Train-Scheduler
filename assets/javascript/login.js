@@ -1,27 +1,17 @@
 $(document).ready(function() {
 
+    // Get DOM Elements
     var $userEmail = $('#user-email');
     var $userPass = $('#password');
     var $loginBtn = $('#submit-login-btn');
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyB94hM745QQLwmBtzMonrXZeQVTC754aMI",
-        authDomain: "train-scheduler-9e96c.firebaseapp.com",
-        databaseURL: "https://train-scheduler-9e96c.firebaseio.com",
-        projectId: "train-scheduler-9e96c",
-        storageBucket: "train-scheduler-9e96c.appspot.com",
-        messagingSenderId: "543830915095"
-    };
-    firebase.initializeApp(config);
-
-    // When submit button is clicked
+    // Event listener for SUBMIT button
     $loginBtn.on('click', function(event) {
-        console.log('btn pressed');
         event.preventDefault();
         var email = $userEmail.val();
         var pass = $userPass.val();
         firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+            
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -30,7 +20,7 @@ $(document).ready(function() {
           });
     });
 
-    // Redirect user if user is logged in
+    // If signed in, redirect user to home page
     firebase.auth().onAuthStateChanged(function(user) { 
         if (user) {
             window.location = "index.html";

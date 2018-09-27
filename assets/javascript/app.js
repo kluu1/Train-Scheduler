@@ -1,33 +1,24 @@
 $(document).ready(function() {
 
     // Get user DOM elements
-    
-    $btnLogin = $('#btn-login');
-    $btnSignUp = $('#btn-sign-up');
-    
-    $btnLogOut = $('#btn-log-out');
-    $currentUser = $('#current-user');
-    $LogInAndPassInp = $('.form-inline').find('.input-group');
+    var $btnLogin = $('#btn-login');
+    var $btnSignUp = $('#btn-sign-up');
+    var  $btnLogOut = $('#btn-log-out');
+    var $currentUser = $('#current-user');
+    var $LogInAndPassInp = $('.form-inline').find('.input-group');
 
     // Get train DOM elements
-    $trainName = $('#train-name-input');
-    $destinationInput = $('#destination-input');
-    $firstTrainTime = $('#first-train-input');
-    $frequencyInput = $('#frequency-input');
-    $addTrainBtn = $('#add-train-btn');
-    $trainTable = $('#train-table');
-    $clock = $('#clock');
-    $reqFields = $('#required-fields');
-    $militaryT = $('#not-military-time');
-    $nanFreq = $('#nan-frequency');
-    $addTrainCard = $('#add-train-card');
-    
-    // Hide elements on start up
-    $reqFields.hide();
-    $militaryT.hide();
-    $nanFreq.hide();
-    $addTrainCard.hide();
-    $currentUser.hide();
+    var $trainName = $('#train-name-input');
+    var $destinationInput = $('#destination-input');
+    var $firstTrainTime = $('#first-train-input');
+    var  $frequencyInput = $('#frequency-input');
+    var $addTrainBtn = $('#add-train-btn');
+    var $trainTable = $('#train-table');
+    var $clock = $('#clock');
+    var $reqFields = $('#required-fields');
+    var $militaryT = $('#not-military-time');
+    var $nanFreq = $('#nan-frequency');
+    var $addTrainCard = $('#add-train-card');
     
     // Setup clock to display current time
     setInterval(function(){
@@ -37,20 +28,9 @@ $(document).ready(function() {
     // Initialize all tooltips on a page
     $('[data-toggle="tooltip"]').tooltip()
 
-    /*******************************
+    /*****************************************
     *  Firebase Database
-    ********************************/
-    
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyB94hM745QQLwmBtzMonrXZeQVTC754aMI",
-        authDomain: "train-scheduler-9e96c.firebaseapp.com",
-        databaseURL: "https://train-scheduler-9e96c.firebaseio.com",
-        projectId: "train-scheduler-9e96c",
-        storageBucket: "train-scheduler-9e96c.appspot.com",
-        messagingSenderId: "543830915095"
-    };
-    firebase.initializeApp(config);
+    ******************************************/
 
     // Create database references
     var database = firebase.database();
@@ -91,9 +71,9 @@ $(document).ready(function() {
             $nanFreq.text('*Frequency is not a number. Please enter a number in minutes.');
             $("#not-a-number").html("Not a number. Enter a number (in minutes).");
             return false;
-        } else {
 
-            // Create new train object to store into database
+        // Create new train object to store into database
+        } else {
             var newTrain = {
                 name: trainName,
                 destination: destination,
@@ -177,29 +157,26 @@ $(document).ready(function() {
             $('.delete').hide();
         }
 
-
     } // TODO: Handle ERROR?
     
-    // Function to delete train
+    // Function to delete train from table AND Firebase database
     $(document).on('click','.delete', function() {
         var trainKey = $(this).attr('data-train');
         database.ref("trains/" + trainKey).remove();
         $('.'+ trainKey).remove();
     });
 
-    /*******************************
+    /*****************************************
     *  Firebase Authentication
-    ********************************/
+    ******************************************/
 
-
-
-    // Sign in with email and password
+    // Redirect to Log In page
     $btnLogin.on('click', function(event) {
         event.preventDefault();
         window.location = "login.html";
-  
       });
 
+    // Redirect to Sign Up page
     $btnSignUp.on('click', function(event) {
         event.preventDefault();
         window.location = "signup.html";
@@ -224,10 +201,10 @@ $(document).ready(function() {
         }
     });
 
-    // User Log Out
+    // Log current user out
     $btnLogOut.on('click', function(event) {
         firebase.auth().signOut();
-        console.log('logged out');
+        console.log('User is logged out.');
     });
 
 });

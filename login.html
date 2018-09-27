@@ -9,47 +9,40 @@
         <title>Atlanta Transit System</title>
     </head>
         <body>
-        <!-- Nav -->
-        <nav class="navbar navbar-dark bg-info justify-content-between" id="nav-header">
-            <button type="button" class="btn btn-default btn-md"><i class='fa fa-subway' aria-hidden='true'></i>ATS</button>
-        </nav> <!-- /nav-bar -->
-        <!-- Container -->
-        <div class="container">
-
-        <div class="card text-white bg-info mb-3">
-            <div class="card-header">
-                <h3 class="card-title">Sign In</h3>
-            </div>
-            <div class="card-body text-dark bg-light">
-                
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="user-email-addon"><i class="fas fa-user"></i></span>
+            <nav class="navbar navbar-dark bg-info justify-content-between" id="nav-header">
+                <button type="button" class="btn btn-default btn-md"><i class='fa fa-subway' aria-hidden='true'></i>ATS</button>
+            </nav> 
+            <div class="container">
+            <div class="card text-white bg-info mb-3" id="signin-card">
+                <div class="card-header">
+                    <h3 class="card-title">Sign In</h3>
+                </div>
+                <div class="card-body text-dark bg-light">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="user-email-addon"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="User Email" id="user-email">
                         </div>
-                        <input type="text" class="form-control" placeholder="User Email" id="user-email">
-                    </div>
-                </div>            
-            
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="password-addon"><i class="fas fa-key"></i></span>
+                    </div>           
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="password-addon"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Password" id="password">
                         </div>
-                        <input type="password" class="form-control" placeholder="Password" id="password">
-                    </div>
-                </div>    
-                
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary bg-info" id="submit-login-btn">Log In</button>
-                    <span id="required-fields"></span>
-                    <span id="not-military-time"></span>
-                    <span id="nan-frequency"></span>                
-                </div> 
-
+                    </div>    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary bg-info" id="submit-login-btn">Log In</button>
+                        <span id="required-fields"></span>
+                        <span id="not-military-time"></span>
+                        <span id="nan-frequency"></span>                
+                    </div> 
+                </div>
             </div>
-        </div>
-        </div> <!-- /container -->
+        </div> 
         <footer>
             <div>Copyright &copy; 2018 Kevin Luu </div> 
         </footer>
@@ -58,6 +51,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
         <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
         <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+        <script src="assets/javascript/config.js"></script>
         <script src="assets/javascript/login.js"></script>
     </body>
 </html>
