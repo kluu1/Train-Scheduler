@@ -1,14 +1,13 @@
 $(document).ready(function() {
 
-    $('.delete').hide();
-
     // Get user DOM elements
-    $userEmail = $('#user-email');
-    $userPass = $('#password');
+    
     $btnLogin = $('#btn-login');
     $btnSignUp = $('#btn-sign-up');
+    
     $btnLogOut = $('#btn-log-out');
     $currentUser = $('#current-user');
+    $LogInAndPassInp = $('.form-inline').find('.input-group');
 
     // Get train DOM elements
     $trainName = $('#train-name-input');
@@ -30,7 +29,6 @@ $(document).ready(function() {
     $addTrainCard.hide();
     $currentUser.hide();
     
-
     // Setup clock to display current time
     setInterval(function(){
         $clock.text(moment().format('hh:mm:ss A'))
@@ -97,12 +95,12 @@ $(document).ready(function() {
 
             // Create new train object to store into database
             var newTrain = {
-                    name: trainName,
-                    destination: destination,
-                    firstTrain: firstTrainTime,
-                    frequency: trainFrequency,
-                    dateAdded: firebase.database.ServerValue.TIMESTAMP
-                }
+                name: trainName,
+                destination: destination,
+                firstTrain: firstTrainTime,
+                frequency: trainFrequency,
+                dateAdded: firebase.database.ServerValue.TIMESTAMP
+            }
 
             // Insert new train data into the database
             trainsRef.push(newTrain);
@@ -167,9 +165,19 @@ $(document).ready(function() {
                 "</td><td>" + tFrequency + 
                 "</td><td>" + arrivalTime + 
                 "</td><td>" + tMinutesTillTrain + 
-                "</td><td>" + "<button class='delete btn btn-primary' data-train=" + trainKey + ">DELETE</button>" +
+                "</td><td>" + "<button class='delete btn btn-primary' data-train=" + trainKey + ">DELETE<i class='fa fa-trash' aria-hidden='true'></i></button>" +
                 "</td></tr>");
         });
+
+        // If user is logged out, don't show delete button
+        var user = firebase.auth().currentUser;
+        if (user) {
+            $('.delete').show();
+        } else {
+            $('.delete').hide();
+        }
+
+
     } // TODO: Handle ERROR?
     
     // Function to delete train
@@ -183,36 +191,25 @@ $(document).ready(function() {
     *  Firebase Authentication
     ********************************/
 
-    // Event listener for Sign Up
-    $btnSignUp.on('click', function(event) {
-        event.preventDefault();
-        var email = $userEmail.val();
-        var pass = $userPass.val();
-        console.log('email: ' + email);
-        console.log('pass: ' + pass);
-        firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error) {
-            console.log(error.message);
-        });
-    });
+
 
     // Sign in with email and password
     $btnLogin.on('click', function(event) {
         event.preventDefault();
-        var email = $userEmail.val();
-        var pass = $userPass.val();
-        var promise = firebase.auth().signInWithEmailAndPassword(email, pass);
-        promise.catch(function(err) { 
-            console.log(err.massage)
-        });
+        window.location = "login.html";
+  
       });
+
+    $btnSignUp.on('click', function(event) {
+        event.preventDefault();
+        window.location = "signup.html";
+    });
 
     // Acting upon user sign in and sign out
     firebase.auth().onAuthStateChanged(function(user) { 
         if (user) {
             $btnLogin.hide();
             $btnSignUp.hide();
-            $userEmail.hide();
-            $userPass.hide();
             $addTrainCard.show();
             $btnLogOut.show();
             $currentUser.show();
@@ -221,18 +218,14 @@ $(document).ready(function() {
         } else {
             $btnLogOut.hide();
             $btnLogin.show();
-            $userEmail.show();
-            $userPass.show();
+            $LogInAndPassInp.show();
             $currentUser.hide();
-            $userEmail.val('');
-            $userPass.val('');
             $('.delete').hide();
         }
-      });
+    });
 
     // User Log Out
     $btnLogOut.on('click', function(event) {
-        // event.preventDefault();
         firebase.auth().signOut();
         console.log('logged out');
     });
