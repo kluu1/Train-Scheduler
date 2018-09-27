@@ -5,12 +5,14 @@ Live Demo: https://kluu1.github.io/Train-Scheduler/
 - Users can sign up and login to add new trains to the schedule
 
 ## Design Notes
-- Train data is stored in Firebase Realtime Database
+- Firebase Authentication is turned on for Email/Password
+- Users must be logged in to add or remove trains from the schedule
+- Users can sign up if they don't have an account, password must be at least 8 characters long
+- Train data is stored in Firebase Realtime Database ('/trains')
 - When a new train is added to the database, the train schedule will update
-- All required fields must be populated, and checks for military time, and frequency must be a number
+- All required fields must be populated - Checks for military time and frequency must be a number
 - Moment.js library is used to convert and format time
-- Logic in the app will calculate when the next train arrival
-- Firebase authentication is enabled for email and password
+- Logic in the app will calculate when the next train arrival and minutes away
 
 ## Technologies used
 - Firebase
