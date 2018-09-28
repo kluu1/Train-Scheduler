@@ -1,11 +1,11 @@
 # Train Scheduler
 Live Demo: https://kluu1.github.io/Train-Scheduler/
-- A simple train schedule app that shows list of trains with destination, frequency, next arrival, and minutes away
+- A simple train schedule app that shows a list of trains with destination, frequency, next arrival, and minutes away
 - When the page loads, it wil only display the current train schedule
-- Users can sign up and login to add new trains to the schedule
+- Only logged in users can add/remove trains to/from the schedule
 
 ## Design Notes
-- Firebase Authentication is turned on for Email/Password
+- Firebase authentication is enabled on for Email/Password
 - Users must be logged in to add or remove trains from the schedule
 - Users can sign up if they don't have an account, password must be at least 8 characters long
 - Train data is stored in Firebase Realtime Database ('/trains')
