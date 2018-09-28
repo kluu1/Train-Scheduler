@@ -2,6 +2,10 @@
 * Index.html
 ***********************/
 
+h1 {
+    font-size: 4rem;
+}
+
 .hide {
     display: none;
 }
@@ -34,6 +38,22 @@
 
 .jumbotron-header {
     border-bottom: 1px solid lightgray;
+}
+
+#ats-main {
+    height: 150px;
+    position: relative;
+}
+
+.l-float {
+    float: left;
+    bottom: 0;
+    position: absolute;
+}
+
+.r-float {
+    float: right;
+    height: 100%;
 }
 
 .card-title {
