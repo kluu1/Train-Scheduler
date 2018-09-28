@@ -14,8 +14,8 @@
             <form class="form-inline">
                 <button class="btn btn-primary" type="submit" id="btn-login">Login <i class="fa fa-sign-in-alt"></i></button>
                 <button class="btn btn-primary" type="submit" id="btn-sign-up">Sign Up <i class="fa fa-play-circle"></i></button>
-                <span id="current-user"></span>
-                <button class="btn btn-primary" type="submit" id="btn-log-out">Log out<i class="fa fa-sign-out-alt"></i></button></button>
+                <span class="hide" id="current-user"></span>
+                <button class="btn btn-primary hide" type="submit" id="btn-log-out">Log out<i class="fa fa-sign-out-alt"></i></button></button>
             </form> 
         </nav> 
         <div class="container">
@@ -45,7 +45,7 @@
                 </table>
             </div>
         </div> 
-        <div class="card text-white bg-info mb-3" id="add-train-card">
+        <div class="card text-white bg-info mb-3 hide" id="add-train-card">
             <div class="card-header">
                 <h3 class="card-title">Add Train</h3>
             </div>
@@ -68,21 +68,20 @@
                         <input type="text" class="form-control" id="frequency-input">
                     </div>
                     <button type="submit" class="btn btn-primary bg-info" id="add-train-btn" data-toggle="modal" data-target="#submit-modal">Submit</button>
-                    <span id="required-fields"></span>
-                    <span id="not-military-time"></span>
-                    <span id="nan-frequency"></span>                
+                    <span class="hide" id="required-fields"></span>
+                    <span class="hide" id="not-military-time"></span>
+                    <span class="hide" id="nan-frequency"></span>                
                     <!-- Modal -->
                     <div class="modal fade" id="submit-modal" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header text-white bg-info">
-                                    <h5 class="modal-title">Add New Train</h5>
+                                    <h5 class="modal-title">Success!</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    Train Added Successfully!
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>

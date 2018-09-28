@@ -3,7 +3,7 @@ $(document).ready(function() {
     // Get user DOM elements
     var $btnLogin = $('#btn-login');
     var $btnSignUp = $('#btn-sign-up');
-    var  $btnLogOut = $('#btn-log-out');
+    var $btnLogOut = $('#btn-log-out');
     var $currentUser = $('#current-user');
     var $LogInAndPassInp = $('.form-inline').find('.input-group');
 
@@ -11,7 +11,7 @@ $(document).ready(function() {
     var $trainName = $('#train-name-input');
     var $destinationInput = $('#destination-input');
     var $firstTrainTime = $('#first-train-input');
-    var  $frequencyInput = $('#frequency-input');
+    var $frequencyInput = $('#frequency-input');
     var $addTrainBtn = $('#add-train-btn');
     var $trainTable = $('#train-table');
     var $clock = $('#clock');
@@ -19,14 +19,15 @@ $(document).ready(function() {
     var $militaryT = $('#not-military-time');
     var $nanFreq = $('#nan-frequency');
     var $addTrainCard = $('#add-train-card');
+    var $modalBody = $('.modal-body');
     
-    // Setup clock to display current time
-    setInterval(function(){
-        $clock.text(moment().format('hh:mm:ss A'))
+    // Setup clock to display current time on page
+    setInterval(function() {
+        $clock.text(moment().format('hh:mm:ss A'));
     }, 1000);
 
     // Initialize all tooltips on a page
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
 
     /*****************************************
     *  Firebase Database
@@ -42,34 +43,28 @@ $(document).ready(function() {
         // Prevents the page from reloading
         event.preventDefault();
 
-        // Hide fields error messages if shown
-        $reqFields.hide();
-        $militaryT.hide();
-        $nanFreq.hide();
-
-        // Create scope variables and store user inputs
+        // Create local variables to store user inputs
         var trainName = $trainName.val().trim();
         var destination = $destinationInput.val().trim();
         var firstTrainTime = $firstTrainTime.val().trim();
         var trainFrequency = $frequencyInput.val().trim();
 
-        // Check that all fields are filled out
+        // Check that all required fields are NOT blank
         if (trainName === "" || destination === "" || firstTrainTime === "" || trainFrequency === "") {
-            $reqFields.show();
+            $reqFields.removeClass('hide');
             $reqFields.text('*ALL fields are required to add a train to the schedule.');
             return false;		
 
         // Check if First Train Time is in military time
         } else if (firstTrainTime.length !== 5 || firstTrainTime.substring(2,3) !== ':') {
-            $militaryT.show();
+            $militaryT.removeClass('hide');
             $militaryT.text('*First train time must be in military time.');
             return false;
 
         // Check if frequency is a number
         } else if (isNaN(trainFrequency)) {
-            $nanFreq.show();
+            $nanFreq.removeClass('hide');
             $nanFreq.text('*Frequency is not a number. Please enter a number in minutes.');
-            $("#not-a-number").html("Not a number. Enter a number (in minutes).");
             return false;
 
         // Create new train object to store into database
@@ -86,8 +81,7 @@ $(document).ready(function() {
             trainsRef.push(newTrain);
 
             // Confirmation modal that appears when user submits form and train is added successfully
-		    $(".add-train-modal").html("<p>" + newTrain.trainName + " was successfully added to the current schedule.");
-		    $('#addTrain').modal();
+		    $modalBody.append("Train name '" + trainName + "' was successfully added");
 
             // Clears users input
             $trainName.val('');
@@ -95,10 +89,13 @@ $(document).ready(function() {
             $firstTrainTime.val('');
             $frequencyInput.val('');
         }
+
     });
     
     // Reference Firebase when page loads and new train is added
-    database.ref().child('/trains').on('value', getTrains);
+    database.ref().child('/trains').on('value', getTrains, function(err) {
+        console.log(err);
+    });
 
     // Function to get train data and display
     function getTrains(snapshot) {
@@ -145,19 +142,19 @@ $(document).ready(function() {
                 "</td><td>" + tFrequency + 
                 "</td><td>" + arrivalTime + 
                 "</td><td>" + tMinutesTillTrain + 
-                "</td><td>" + "<button class='delete btn btn-primary' data-train=" + trainKey + ">DELETE<i class='fa fa-trash' aria-hidden='true'></i></button>" +
+                "</td><td>" + "<button class='delete btn btn-primary hide' data-train=" + trainKey + ">DELETE<i class='fa fa-trash'></i></button>" +
                 "</td></tr>");
         });
 
         // If user is logged out, don't show delete button
         var user = firebase.auth().currentUser;
         if (user) {
-            $('.delete').show();
+            $('.delete').removeClass('hide');
         } else {
-            $('.delete').hide();
+            $('.delete').addClass('hide');
         }
 
-    } // TODO: Handle ERROR?
+    } 
     
     // Function to delete train from table AND Firebase database
     $(document).on('click','.delete', function() {
@@ -185,19 +182,19 @@ $(document).ready(function() {
     // Acting upon user sign in and sign out
     firebase.auth().onAuthStateChanged(function(user) { 
         if (user) {
-            $btnLogin.hide();
-            $btnSignUp.hide();
-            $addTrainCard.show();
-            $btnLogOut.show();
-            $currentUser.show();
+            $btnLogin.addClass('hide');
+            $btnSignUp.addClass('hide');
+            $addTrainCard.removeClass('hide');
+            $btnLogOut.removeClass('hide');
+            $currentUser.removeClass('hide');
             $currentUser.text(user.email);
             $('.delete').show();
         } else {
-            $btnLogOut.hide();
-            $btnLogin.show();
+            $btnLogOut.addClass('hide');
+            $btnLogin.removeClass('hide');
             $LogInAndPassInp.show();
-            $currentUser.hide();
-            $('.delete').hide();
+            $currentUser.addClass('hide');
+            $('.delete').addClass('hide');
         }
     });
 

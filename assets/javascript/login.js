@@ -10,14 +10,16 @@ $(document).ready(function() {
         event.preventDefault();
         var email = $userEmail.val();
         var pass = $userPass.val();
-        firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
-            
+        
+        // Sign in user wih email and pass
+        firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {    
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorCode);
             console.log(errorMessage);
           });
+
     });
 
     // If signed in, redirect user to home page
@@ -25,7 +27,7 @@ $(document).ready(function() {
         if (user) {
             window.location = "index.html";
         } else {
-            console.log('nothing');
+            console.log('user not logged in');
         }
     });
 
