@@ -40,6 +40,11 @@ $(document).ready(function() {
     // Create event listener to add new train on click
     $addTrainBtn.on('click', function(event) {
 
+        // Make sure all error messages are hidden
+        $reqFields.addClass('hide');
+        $militaryT.addClass('hide');
+        $nanFreq.addClass('hide');
+
         // Prevents the page from reloading
         event.preventDefault();
 
@@ -56,9 +61,9 @@ $(document).ready(function() {
             return false;		
 
         // Check if First Train Time is in military time
-        } else if (firstTrainTime.length !== 5 || firstTrainTime.substring(2,3) !== ':') {
+        } else if (firstTrainTime.length !== 5 || firstTrainTime.substring(2,3) !== ':' || parseInt(firstTrainTime.charAt(0)) > 2 || parseInt(firstTrainTime.slice(3,5)) > 59) {
             $militaryT.removeClass('hide');
-            $militaryT.text('*First train time must be in military time.');
+            $militaryT.text('*First train time must be in military time between 00:00 and 23:59.');
             return false;
 
         // Check if frequency is a number
@@ -81,13 +86,18 @@ $(document).ready(function() {
             trainsRef.push(newTrain);
 
             // Confirmation modal that appears when user submits form and train is added successfully
-		    $modalBody.append("Train name '" + trainName + "' was successfully added");
+		    $modalBody.text("'" + trainName + "' was successfully added to the schedule.");
 
             // Clears users input
             $trainName.val('');
             $destinationInput.val('');
             $firstTrainTime.val('');
             $frequencyInput.val('');
+
+            // Make sure all error messages are hidden after train is added
+            $reqFields.addClass('hide');
+            $militaryT.addClass('hide');
+            $nanFreq.addClass('hide');
         }
 
     });
@@ -101,7 +111,7 @@ $(document).ready(function() {
     function getTrains(snapshot) {
 
         // Clear train table
-        $trainTable.empty()
+        $trainTable.empty();
 
         // For each train, perform calulations and display to the page
         snapshot.forEach(function(childSnapshot) {
