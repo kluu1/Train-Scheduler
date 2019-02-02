@@ -4,6 +4,9 @@ Live Demo: https://kluu1.github.io/Train-Scheduler/
 - When the page loads, it wil only display the current train schedule
 - Only logged in users can add/remove trains to/from the schedule
 
+## Preview
+![Alt text](/assets/images/trains.png?raw=true "Screenshot")
+
 ## Design Notes
 - Firebase authentication is enabled on for Email/Password
 - Users must be logged in to add or remove trains from the schedule
