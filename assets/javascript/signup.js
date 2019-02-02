@@ -18,20 +18,31 @@ $(document).ready(function() {
             $errorMsg.text('*Password must be at least 8 characters long!');
             $userPass.val('');
         } else {
-            firebase.auth().createUserWithEmailAndPassword(email, pass).catch(function(error) {
+            firebase.auth().createUserWithEmailAndPassword(email, pass).then(function(value) {
+                console.log(value);
+            }).catch(function(error) {
                 console.log(error.message);
             });
         }
         
     });
 
+
+    function registerUsername(email,password,displayName){
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(value) {
+            console.log(value);
+            }).catch(function(error) {
+                console.log(error);
+            });
+    }
+
     // If signed up, redirect to home page
-    firebase.auth().onAuthStateChanged(function(user) { 
-        if (user) {
-            window.location = "index.html";
-        } else {
-            console.log('user not logged in')
-        }
-    });
+    // firebase.auth().onAuthStateChanged(function(user) { 
+    //     if (user) {
+    //         window.location = "index.html";
+    //     } else {
+    //         console.log('user not logged in')
+    //     }
+    // });
 
 });
